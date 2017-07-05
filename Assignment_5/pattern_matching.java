@@ -8,16 +8,17 @@ import java.io.StringReader;
 import java.util.Scanner;
 import java.util.regex.*;
 //import java.util.regex.Pattern;
-//import java.util.regex.Matcher;
+//import java.sutil.regex.Matcher;
 public class pattern_matching {
     public static void main(String[] args){
-
-       String st=("Dharmraj. My and his But.\n what about You.");
-       System.out.println("in put line is:> "+st);
-       Pattern pattern=Pattern.compile(("((?m)([A-z]+[.]))"));
-       Matcher match=pattern.matcher(st);
+        /* Scanner used for taking input from the user */
+        Scanner sc=new Scanner(System.in);
+        String st=sc.nextLine();
+       //Words which are starting from capital letter and ending with . , this type pattern created
+       Pattern pattern=Pattern.compile("^[A-Z].*[.]$");//"<option value=\"(.*?)\">(.*?)</option>"//\b[A-Z]\p{all}+\b[.]
+       Matcher match=pattern.matcher(st);//matches the pattern with user input line
        while(match.find()){
-           System.out.println(match.group()+" ");
+           System.out.println(match.group(0));// printed the default first group of the match
        }
 
     }
