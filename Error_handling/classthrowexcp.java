@@ -21,7 +21,7 @@ public class classthrowexcp  {
         try{
             f(0);
 
-           }catch(Exception e){
+           }catch(new_exception1 | new_exception2 | new_exception3 e){
                e.printStackTrace(System.out);
            }finally{
                System.out.println("this have to be print coz its in finally");
