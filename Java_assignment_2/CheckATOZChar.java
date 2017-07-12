@@ -7,6 +7,10 @@ import java.util.Arrays;
  * Created by zemoso on 12/7/17.
  */
 public class CheckATOZChar {
+        /**
+        *@param bf it will take inputstream and read it as char by char
+        *@return true : if given input stream have all the a-z characters
+        */
         public static boolean checkAlphabatsinString(BufferedReader bf) throws IOException {
             boolean[] tf = new boolean[26];int i;
             boolean b=true;
