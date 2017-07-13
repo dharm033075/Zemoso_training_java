@@ -22,8 +22,7 @@ public class Match_files {
      * @param search : expression of file name that would be searched in directory
      * @return recursively call this function return true if a file is matched to given expression
      */
-    static boolean filefounder(File file, String search) {
-
+    static boolean filefounder(File file, String search)throws NullPointerException {
         /**
          * below it check weather given file is directory or not
          * if it is directory then by using regex pattern it will match the our defined regex
@@ -31,7 +30,6 @@ public class Match_files {
          */
         boolean found=false;
         File[] files = file.listFiles();
-
         for(File f:files){
             if(f.isDirectory()){
                 found=filefounder(f,search);
@@ -42,7 +40,6 @@ public class Match_files {
                    System.out.println(f.getAbsolutePath());
                    return true;
                 }
-
             }
         }
       return found;
@@ -50,13 +47,17 @@ public class Match_files {
     public static void main(String[] args) {
         Scanner sc= new Scanner(System.in);
         while(true){
-            System.out.println("Please enter the file Name regex for searching, enter String 'exit' for Exit");
+            System.out.println("Please enter the file(Not Folder) Name regex for searching, enter String 'exit' for Exit");
             String fileNameOrPatternOfFileToSearch=sc.next();
-            if(fileNameOrPatternOfFileToSearch.matches("exit")){
-                break;
-            }else{
-                System.out.println(filefounder(new File("/home"),fileNameOrPatternOfFileToSearch)?"Yes,found some files":"Didn't match any");
-            }
+           try{
+               if(fileNameOrPatternOfFileToSearch.matches("exit")){
+                   break;
+               }else{
+                   System.out.println(filefounder(new File("/home"),fileNameOrPatternOfFileToSearch)?"Yes,found some files":"Not found,give file name which exist");
+               }
+           }catch(NullPointerException e){
+               System.out.println("give existing file name / It won't search for folder only files will searched");
+           }
 
         }
     }
