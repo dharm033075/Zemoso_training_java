@@ -1,17 +1,9 @@
 package PingAnIP;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Pattern;
-
+import java.util.*;
 import static java.lang.System.in;
-import static java.lang.System.setIn;
-
 /**
  * Created by zemoso on 6/7/17.
 */
@@ -22,9 +14,10 @@ public class Ping {
      * @return true if getting rtt of a ping
      *
      */
-    public static boolean getAVGrtt(String pingAddress,int nping1){
-        double medRtt=0.0;
-        Scanner sc=new Scanner(System.in);
+    public static boolean getAVGrtt(String pingAddress,int nping1) throws IOException,ArithmeticException,
+            IndexOutOfBoundsException,InputMismatchException{
+        List<Double> arr=new ArrayList<>();
+        double medRtt;
         try{
             /**
              * First taking the input as IP or hostname and number of pings. made these inputs as string to run on terminal
@@ -32,8 +25,8 @@ public class Ping {
              */
 
 
-            int nping=1;
-            double medianRTTtime=0;
+            int nping=nping1;
+            double RTT=0.0;
             try {
             }catch(NumberFormatException e) {
                 System.out.println("Input is not a valid integer but it will at least once");
@@ -45,23 +38,32 @@ public class Ping {
             String outputs="";
 
             while((outputs=inputStream.readLine())!=null){
-                double RTT;
-                if(outputs.indexOf("time=")>0){
+                 if(outputs.indexOf("time=")>0){
                     System.out.println("RTT is per ping to host IP "+outputs.substring(outputs.indexOf("time=")));
                     String str2=outputs.substring(outputs.indexOf("time="));
                     String str3= str2.substring(str2.indexOf("=")+1,str2.length()-3);
                     RTT=Double.parseDouble(str3);
-                    medianRTTtime=medianRTTtime+RTT;
+                    arr.add(RTT);
                 }
             }
-            medRtt=(medianRTTtime/nping);
-            System.out.println(medRtt!=0.0?"Median Round trip time to ping to host is: "+(medianRTTtime/nping):"Plz enter the right ping Adress");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return medRtt>0.0?true:false;
-    }
 
+              Collections.sort(arr);
+            System.out.println(arr.toString());
+            if(arr.size()==1){
+                medRtt=arr.get(0);
+            }else if(arr.size()%nping==0 && nping!=0){
+                medRtt=(arr.get((nping/2)-1)+arr.get((nping/2)))/2;
+                }
+            else{
+                medRtt=arr.get((nping/2));
+                  System.out.println(medRtt);
+            }
+            System.out.println(arr.size()!=0?"Median Round trip time to ping to host is: "+medRtt:"Plz enter the right ping Adress");
+        }catch(Exception e){
+            System.out.println("your given input is not valid");
+        }
+        return arr.size()==0?true:false;
+    }
     /**
      *
      * @param choiceOfInput in which format user want to give adress
@@ -79,13 +81,16 @@ public class Ping {
         }
         return pingAddress;
     }
-    public static void main(String[] args) throws IOException {
-        System.out.println("You want to ping by IP(=0) or domain name");
-        Scanner sc=new Scanner(in);
-        int choiceofinput=sc.nextInt();
-        System.out.println("Enter the digit, that many times you want to ping the host");
-        int nping1=sc.nextInt();
-        getAVGrtt(inputchoice(choiceofinput),nping1);
+    public static void main(String[] args){
+        try{
+            Scanner sc=new Scanner(in);
+            System.out.println("Enter the digit, that many times you want to ping the host");
+            int nping1=sc.nextInt();
+            System.out.println("You want to ping by IP(=0) or domain name");
+            int choiceofinput=sc.nextInt();
+            getAVGrtt(inputchoice(choiceofinput),nping1);
+        }catch(IOException|InputMismatchException | IndexOutOfBoundsException e){
+            System.out.println("Entered values are not valid");
+        }
     }
-
 }
