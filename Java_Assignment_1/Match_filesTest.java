@@ -13,28 +13,17 @@ import static org.junit.Assert.*;
 public class Match_filesTest {
     @Test
     public void firstcase() {
-        Match_files.filefounder(new File("/home"), ".java");
-        assertTrue(Match_files.countOfFile>0);
+
+        assertTrue(Match_files.filefounder(new File("."), ".txt"));
     }
     @Test
-    public void secondcase() {
-        Match_files.filefounder(new File("."), ".txt");
-        assertTrue(Match_files.countOfFile>0);
+    public void secondtest() {
+        assertTrue(Match_files.filefounder(new File("/home"), ""));
     }
     @Test
-    public void thirdcase() {
-        Match_files.filefounder(new File("/home/zemoso/"), "rahul.txt");
-        assertTrue(Match_files.countOfFile>0);
-    }
-    @Test
-    public void fourthcase() {
-        Match_files.filefounder(new File("/home"), "");
-        assertTrue(Match_files.countOfFile>0);
-    }
-    @Test
-    public void fifthtcase() {
-        Match_files.filefounder(new File("/home"), "@It wont match");
-        assertFalse(Match_files.countOfFile>0);
+    public void third() {
+
+        assertFalse(Match_files.filefounder(new File("/home"), "@It wont match"));
         System.out.println("It didn't match");
     }
 
