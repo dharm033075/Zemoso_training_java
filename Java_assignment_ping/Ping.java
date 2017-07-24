@@ -2,7 +2,11 @@ package PingAnIP;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.util.List;
 import static java.lang.System.in;
 /**
  * Created by zemoso on 6/7/17.
@@ -10,7 +14,7 @@ import static java.lang.System.in;
 public class Ping {
     /**
      *@param pingAddress pingAdress to be ping
-     *@param nping1 Number of times want to ping
+     *@param npings Number of times want to ping
      * @return true if getting rtt of a ping
      *
      */
